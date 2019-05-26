@@ -1,3 +1,5 @@
+/* global VK */
+
 import 'normalize.css';
 import './styles/style.scss';
 
@@ -7,10 +9,11 @@ const appId = '6998698';
 VK.init({ apiId: appId });
 
 VK.Api.call(
-	'users.get',
+	'friends.get',
 	{
-		user_ids: 225300011,
+		order: 'name',
+		fields: 'city,domain,sex,universities',
 		v: apiVersion
 	},
-	(r) => { r.response && alert('Привет, ' + r.response[0].first_name) }
+	(response) => { console.log(response); }
 );
