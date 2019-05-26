@@ -12,7 +12,7 @@ VK.Api.call(
 	'friends.get',
 	{
 		order: 'name',
-		fields: 'city,domain,sex,universities',
+		fields: 'name',
 		v: apiVersion
 	},
 	(response) => { console.log(response); }
