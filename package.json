@@ -29,6 +29,7 @@
     "webpack-md5-hash": "0.0.6"
   },
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "qs": "6.7.0"
   }
 }
