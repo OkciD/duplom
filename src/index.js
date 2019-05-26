@@ -1,4 +1,4 @@
-/* global VK */
+/* global VK, alchemy */
 
 import 'normalize.css';
 import './styles/style.scss';
@@ -17,3 +17,29 @@ VK.Api.call(
 	},
 	(response) => { console.log(response); }
 );
+
+const some_data = {
+	"nodes": [
+		{
+			"id": 1
+		},
+		{
+			"id": 2
+		},
+		{
+			"id": 3
+		}
+	],
+	"edges": [
+		{
+			"source": 1,
+			"target": 2
+		},
+		{
+			"source": 1,
+			"target": 3,
+		}
+	]
+};
+
+alchemy.begin({"dataSource": some_data});
