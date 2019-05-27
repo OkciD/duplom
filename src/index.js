@@ -8,38 +8,45 @@ const appId = '6998698';
 
 VK.init({ apiId: appId });
 
-VK.Api.call(
-	'friends.get',
-	{
-		order: 'name',
-		fields: 'name',
-		v: apiVersion
-	},
-	(response) => { console.log(response); }
-);
+// TODO: reject
+new Promise((resolve, reject) => {
+	VK.Api.call(
+		'friends.get',
+		{
+			order: 'name',
+			fields: 'name',
+			v: apiVersion
+		},
+		(response) => { resolve(response); }
+	);
+})
+	.then(({ response }) => {
+		console.log(response);
 
-const some_data = {
-	"nodes": [
-		{
-			"id": 1
-		},
-		{
-			"id": 2
-		},
-		{
-			"id": 3
-		}
-	],
-	"edges": [
-		{
-			"source": 1,
-			"target": 2
-		},
-		{
-			"source": 1,
-			"target": 3,
-		}
-	]
-};
+		return response;
+	})
+	.then((response) => {
+		const friends = response.items;
 
-alchemy.begin({"dataSource": some_data});
+		return {
+			nodes: [
+				{
+					id: 0,
+					caption: 'Я'
+				},
+				...friends.map(({ id, first_name, last_name }) => ({
+					id,
+					caption: `${first_name} ${last_name}`
+				}))
+			],
+			edges: friends.map(({ id }) => ({
+				source: 0,
+				target: id
+			}))
+		}
+	})
+	.then((graphData) => {
+		alchemy.begin({
+			dataSource: graphData
+		});
+	});
