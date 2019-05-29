@@ -3,11 +3,18 @@ import VK from 'vk-openapi';
 const apiVersion = '5.95';
 const appId = '6998698';
 
+export function sleep(ms = 500) {
+	console.log('sleep');
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function init() {
 	VK.init({ apiId: appId });
 }
 
-export function call(method, data) {
+export async function call(method, data) {
+	await sleep();
+
 	return new Promise((resolve, reject) => {
 		VK.Api.call(
 			method,

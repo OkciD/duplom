@@ -29,9 +29,27 @@ VkApi.call(
 			],
 			links: friends.map(({ id }) => ({
 				source: 0,
-				target: id
+				target: id,
+				value: 1
 			}))
 		}
+	})
+	.then((graphData) => { // OMG, real promise sequence!
+		graphData.nodes.reduce((accumulatorPromise, { id: friendId }) => accumulatorPromise.finally(() =>
+			VkApi.call('friends.getMutual', { target_uid: friendId })
+				.then((mutualFriendsIds) => {
+					graphData.links = [
+						...graphData.links,
+						...mutualFriendsIds.map((mutualFriendId) => ({
+							source: friendId,
+							target: mutualFriendId,
+							value: 1
+						}))
+					]
+				})),
+		Promise.resolve());
+
+		return graphData;
 	})
 	.then((graphData) => {
 		draw(graphData);
