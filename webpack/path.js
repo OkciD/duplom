@@ -1,7 +1,7 @@
-const prod_Path = '../dist';
-const src_Path = 'src';
+const prodPath = '../dist';
+const srcPath = 'src';
 
 module.exports = {
-  prod_Path,
-  src_Path
-}
+	prodPath,
+	srcPath
+};

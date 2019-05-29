@@ -5,63 +5,64 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const {
-  prod_Path,
-  src_Path
+	prodPath,
+	srcPath
 } = require('./path');
 const {
-  selectedPreprocessor
+	selectedPreprocessor
 } = require('./loader');
 
 module.exports = {
-  entry: {
-    main: './' + src_Path + '/index.js'
-  },
-  output: {
-    path: path.resolve(__dirname, prod_Path),
-    filename: '[name].[chunkhash].js'
-  },
-  module: {
-    rules: [{
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: selectedPreprocessor.fileRegexp,
-        use: [{
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-          },
-          {
-            loader: selectedPreprocessor.loaderName
-          }
-        ]
-      },
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, prod_Path), {
-      root: process.cwd()
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css'
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: './' + src_Path + '/index.html',
-      filename: 'index.html'
-    }),
-    new WebpackMd5Hash()
-  ]
+	entry: {
+		main: './' + srcPath + '/index.js'
+	},
+	output: {
+		path: path.resolve(__dirname, prodPath),
+		filename: '[name].[chunkhash].js'
+	},
+	module: {
+		rules: [{
+			test: /\.js$/,
+			exclude: /node_modules/,
+			use: {
+				loader: 'babel-loader'
+			}
+		},
+			{
+				test: selectedPreprocessor.fileRegexp,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
+					{
+						loader: 'css-loader',
+						options: {
+							minimize: true
+						}
+					},
+					{
+						loader: 'postcss-loader',
+					},
+					{
+						loader: selectedPreprocessor.loaderName
+					}
+				]
+			},
+		]
+	},
+	plugins: [
+		new CleanWebpackPlugin(path.resolve(__dirname, prodPath), {
+			root: process.cwd()
+		}),
+		new MiniCssExtractPlugin({
+			filename: 'style.[contenthash].css'
+		}),
+		new HtmlWebpackPlugin({
+			inject: false,
+			hash: true,
+			template: './' + srcPath + '/index.html',
+			filename: 'index.html'
+		}),
+		new WebpackMd5Hash()
+	]
 };
