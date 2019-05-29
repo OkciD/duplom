@@ -1,31 +1,17 @@
 import 'normalize.css';
 import './styles/index.scss';
-
-import VK from 'vk-openapi';
+import * as VkApi from './modules/vkApi'
 import { draw } from './modules/graph';
 
-const apiVersion = '5.95';
-const appId = '6998698';
+VkApi.init();
 
-VK.init({ apiId: appId });
-
-// TODO: reject
-new Promise((resolve, reject) => {
-	VK.Api.call(
-		'friends.get',
-		{
-			order: 'name',
-			fields: 'name',
-			v: apiVersion
-		},
-		(response) => { resolve(response); }
-	);
-})
-	.then(({ response }) => {
-		console.log(response);
-
-		return response;
-	})
+VkApi.call(
+	'friends.get',
+	{
+		order: 'name',
+		fields: 'name',
+	}
+)
 	.then((response) => {
 		const friends = response.items;
 
