@@ -59,5 +59,6 @@ module.exports = {
 			template: path.resolve(srcPath, 'index.html'),
 			filename: 'index.html'
 		})
-	]
+	],
+	externals: require('./externals')
 };

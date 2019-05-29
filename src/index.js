@@ -1,6 +1,6 @@
-/* global VK, alchemy */
-
 import 'normalize.css';
+import VK from 'vk-openapi';
+import alchemy from 'alchemy';
 
 const apiVersion = '5.95';
 const appId = '6998698';

@@ -62,5 +62,6 @@ module.exports = {
 			filename: 'index.html'
 		}),
 		new WebpackMd5Hash()
-	]
+	],
+	externals: require('./externals')
 };
