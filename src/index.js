@@ -1,4 +1,6 @@
 import 'normalize.css';
+import './index.scss';
+
 import VK from 'vk-openapi';
 import alchemy from 'alchemy';
 

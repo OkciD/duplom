@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackInlinePlugin = require('html-webpack-inline-plugin');
 
 const {
 	prodPath,
@@ -19,13 +20,14 @@ module.exports = {
 		filename: '[name].[chunkhash].js'
 	},
 	module: {
-		rules: [{
-			test: /\.js$/,
-			exclude: /node_modules/,
-			use: {
-				loader: 'babel-loader'
-			}
-		},
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader'
+				}
+			},
 			{
 				test: selectedPreprocessor.fileRegexp,
 				use: [
@@ -46,6 +48,15 @@ module.exports = {
 					}
 				]
 			},
+			{
+				test: /\.(png|jpe?g|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {},
+					},
+				],
+			},
 		]
 	},
 	plugins: [
@@ -61,7 +72,8 @@ module.exports = {
 			template: path.resolve(srcPath, 'index.html'),
 			filename: 'index.html'
 		}),
-		new WebpackMd5Hash()
+		new WebpackMd5Hash(),
+		new HtmlWebpackInlinePlugin()
 	],
 	externals: require('./externals')
 };
