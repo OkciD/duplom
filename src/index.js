@@ -1,8 +1,8 @@
 import 'normalize.css';
-import './index.scss';
+import './styles/index.scss';
 
 import VK from 'vk-openapi';
-import alchemy from 'alchemy';
+import { draw } from './modules/graph';
 
 const apiVersion = '5.95';
 const appId = '6998698';
@@ -35,19 +35,18 @@ new Promise((resolve, reject) => {
 					id: 0,
 					caption: 'Я'
 				},
-				...friends.map(({ id, first_name, last_name }) => ({
+				...friends.map(({ id, first_name, last_name }, index) => ({
 					id,
-					caption: `${first_name} ${last_name}`
+					caption: `${first_name} ${last_name}`,
+					group: index % 4
 				}))
 			],
-			edges: friends.map(({ id }) => ({
+			links: friends.map(({ id }) => ({
 				source: 0,
 				target: id
 			}))
 		}
 	})
 	.then((graphData) => {
-		alchemy.begin({
-			dataSource: graphData
-		});
+		draw(graphData);
 	});

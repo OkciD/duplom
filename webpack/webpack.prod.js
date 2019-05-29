@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackInlinePlugin = require('html-webpack-inline-plugin');
 
 const {
 	prodPath,
@@ -72,8 +71,7 @@ module.exports = {
 			template: path.resolve(srcPath, 'index.html'),
 			filename: 'index.html'
 		}),
-		new WebpackMd5Hash(),
-		new HtmlWebpackInlinePlugin()
+		new WebpackMd5Hash()
 	],
 	externals: require('./externals')
 };

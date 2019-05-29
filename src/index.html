@@ -7,16 +7,22 @@
     <title>Duplom</title>
 
     <script src="https://vk.com/js/api/openapi.js?160" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
-
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
 </head>
 
 <body>
-    <div id="alchemy" class="alchemy"></div>
+    <div id="scaleFactorSettings">
+        <p>Scale of the groups: <span id='scaleFactorLabel'>1.2</span></p>
+        <input type="range" min="1" max="3" value="1.2" step=".1"
+               oninput="scaleFactor = value; d3.select('#scaleFactorLabel').text(scaleFactor); updateGroups()">
+    </div>
+    <div id="curveSettings">
+        <p>Type of curve: <span id='curveLabel'>curveCatmullRomClosed</span></p>
+    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-    <script inline src="assets/alchemyjs@0.4.1/alchemy.min.js"></script>
+    <svg width="1024" height="768"></svg>
+
     <script defer src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>
 

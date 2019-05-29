@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackInlinePlugin = require('html-webpack-inline-plugin');
 
 const {
 	prodPath,
@@ -70,8 +69,7 @@ module.exports = {
 			hash: false,
 			template: path.resolve(srcPath, 'index.html'),
 			filename: 'index.html'
-		}),
-		new HtmlWebpackInlinePlugin()
+		})
 	],
 	externals: require('./externals')
 };
