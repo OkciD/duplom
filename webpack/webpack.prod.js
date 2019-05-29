@@ -8,13 +8,11 @@ const {
 	prodPath,
 	srcPath
 } = require('./path');
-const {
-	selectedPreprocessor
-} = require('./loader');
+const selectedPreprocessor = require('./styles-loader');
 
 module.exports = {
 	entry: {
-		main: './' + srcPath + '/index.js'
+		main: path.resolve(srcPath, 'index.js')
 	},
 	output: {
 		path: path.resolve(__dirname, prodPath),
@@ -60,7 +58,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			inject: false,
 			hash: true,
-			template: './' + srcPath + '/index.html',
+			template: path.resolve(srcPath, 'index.html'),
 			filename: 'index.html'
 		}),
 		new WebpackMd5Hash()
