@@ -4,7 +4,6 @@ const apiVersion = '5.95';
 const appId = '6998698';
 
 export function sleep(ms = 500) {
-	console.log('sleep');
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
