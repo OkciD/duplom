@@ -1,7 +1,6 @@
 /* global VK, alchemy */
 
 import 'normalize.css';
-import './styles/style.scss';
 
 const apiVersion = '5.95';
 const appId = '6998698';
