@@ -1,4 +1,3 @@
 module.exports = {
-	'vk-openapi': 'VK',
-	d3: 'd3'
+	'vk-openapi': 'VK'
 };
