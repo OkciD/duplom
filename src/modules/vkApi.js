@@ -19,12 +19,18 @@ export function call(method, data) {
 		)
 	})
 		.then((response) => {
-			console.log(`${method} call OK`, response);
+			console.group(`${method} called %c OK`, 'color: green');
+			console.log('args', data);
+			console.log('response', response);
+			console.groupEnd();
 
 			return response;
 		})
 		.catch((error) => {
-			console.error(`${method} call ERROR`, error);
+			console.group(`${method} called %c ERROR`, 'color: red');
+			console.log('args', data);
+			console.log('error', error);
+			console.groupEnd();
 
 			throw error;
 		})
