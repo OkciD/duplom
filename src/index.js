@@ -21,10 +21,10 @@ VkApi.call(
 					id: 0,
 					caption: 'Я'
 				},
-				...friends.map(({ id, first_name, last_name }, index) => ({
+				...friends.map(({ id, first_name, last_name }) => ({
 					id,
 					caption: `${first_name} ${last_name}`,
-					group: index % 4
+					group: 1
 				}))
 			],
 			links: friends.map(({ id }) => ({
@@ -34,8 +34,8 @@ VkApi.call(
 			}))
 		}
 	})
-	.then((graphData) => { // OMG, real promise sequence!
-		graphData.nodes.reduce((accumulatorPromise, { id: friendId }) => accumulatorPromise.finally(() =>
+	.then(async (graphData) => { // OMG, real promise sequence!
+		await graphData.nodes.reduce((accumulatorPromise, { id: friendId }) => accumulatorPromise.then(() =>
 			VkApi.call('friends.getMutual', { target_uid: friendId })
 				.then((mutualFriendsIds) => {
 					graphData.links = [
@@ -46,7 +46,15 @@ VkApi.call(
 							value: 1
 						}))
 					]
-				})),
+				})
+				.catch((error) => {
+					if ([15, 100].includes(error.error_code)) {
+						return;
+					}
+
+					throw error;
+				})
+		),
 		Promise.resolve());
 
 		return graphData;
