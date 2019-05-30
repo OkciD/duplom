@@ -3,12 +3,16 @@ import VK from 'vk-openapi';
 const apiVersion = '5.95';
 const appId = '6998698';
 
-export function sleep(ms = 500) {
+export function sleep(ms = 300) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function init() {
 	VK.init({ apiId: appId });
+	VK.Auth.login(
+		() => {},
+		2 // https://vk.com/dev/permissions
+	);
 }
 
 export async function call(method, data) {
@@ -25,7 +29,7 @@ export async function call(method, data) {
 		)
 	})
 		.then((response) => {
-			console.group(`${method} called %c OK`, 'color: green');
+			console.groupCollapsed(`${method} called %c OK`, 'color: green');
 			console.log('args', data);
 			console.log('response', response);
 			console.groupEnd();
@@ -33,7 +37,7 @@ export async function call(method, data) {
 			return response;
 		})
 		.catch((error) => {
-			console.group(`${method} called %c ERROR`, 'color: red');
+			console.groupCollapsed(`${method} called %c ERROR`, 'color: red');
 			console.log('args', data);
 			console.log('error', error);
 			console.groupEnd();
