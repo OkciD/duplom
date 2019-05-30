@@ -1,5 +1,11 @@
 import * as d3 from 'd3';
 
+window.d3 = d3;
+
+/**
+ * @see https://bl.ocks.org/XavierGimenez/a8e8c5e9aed71ba96bd52332682c0399
+ */
+
 var svg = d3.select('svg'),
 	width = +svg.attr('width'),
 	height = +svg.attr('height'),
@@ -136,13 +142,13 @@ var polygonGenerator = function(groupId) {
 	return d3.polygonHull(node_coords);
 };
 
-function updateGroups() {
+window.updateGroups = () => {
 	groupIds.forEach(function(groupId) {
 		var path = paths.filter(function(d) { return d == groupId;})
 			.attr('transform', 'scale(1) translate(0,0)')
 			.attr('d', function(d) {
 				polygon = polygonGenerator(d);
-				centroid = d3.polygonCentroid(polygon);
+				centroid = window.d3.polygonCentroid(polygon);
 
 				// to scale the shape properly around its points:
 				// move the 'g' element to the centroid point, translate
@@ -157,7 +163,7 @@ function updateGroups() {
 
 		d3.select(path.node().parentNode).attr('transform', 'translate('  + centroid[0] + ',' + (centroid[1]) + ') scale(' + scaleFactor + ')');
 	});
-}
+};
 
 
 // drag nodes
