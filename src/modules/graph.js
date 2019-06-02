@@ -126,7 +126,7 @@ export function draw(graph) {
 
 	node.append('title')
 		.text(function (d) {
-			return d.id;
+			return d.caption;
 		});
 
 	simulation
