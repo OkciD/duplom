@@ -1,14 +1,13 @@
 import VK from 'vk-openapi';
-import qs from 'qs';
+import queryString from '../utils/queryString';
 
 const API_VERSION = '5.95';
 const APP_ID = '6998698';
 const NO_CACHE_PARAM_NAME = 'noCache';
 const DROP_CACHE_PARAM_NAME = 'dropCache';
 
-const qsObject = qs.parse(window.location.search.replace(/^\?/, ''));
-const noCache = qsObject.hasOwnProperty(NO_CACHE_PARAM_NAME);
-const dropCache = qsObject.hasOwnProperty(DROP_CACHE_PARAM_NAME);
+const noCache = queryString.has(NO_CACHE_PARAM_NAME);
+const dropCache = queryString.has(DROP_CACHE_PARAM_NAME);
 
 export function sleep(ms = 300) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
