@@ -21,10 +21,10 @@ VkApi.call(
 					id: 0,
 					caption: 'Я'
 				},
-				...friends.map(({ id, first_name, last_name }) => ({
+				...friends.map(({ id, first_name, last_name, university: universityId }) => ({
 					id,
 					caption: `${first_name} ${last_name}`,
-					group: 1
+					group: universityId
 				}))
 			],
 			links: friends.map(({ id }) => ({
