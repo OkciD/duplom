@@ -35,27 +35,29 @@ VkApi.call(
 		}
 	})
 	.then(async (graphData) => { // OMG, real promise sequence!
-		await graphData.nodes.reduce((accumulatorPromise, { id: friendId }) => accumulatorPromise.then(() =>
-			VkApi.call('friends.getMutual', { target_uid: friendId })
-				.then((mutualFriendsIds) => {
-					graphData.links = [
-						...graphData.links,
-						...mutualFriendsIds.map((mutualFriendId) => ({
-							source: friendId,
-							target: mutualFriendId,
-							value: 1
-						}))
-					]
-				})
-				.catch((error) => {
-					if ([15, 100].includes(error.error_code)) {
-						return;
-					}
+		await graphData.nodes.reduce(
+			(accumulatorPromise, { id: friendId }) => accumulatorPromise.then(() =>
+				VkApi.call('friends.getMutual', { target_uid: friendId })
+					.then((mutualFriendsIds) => {
+						graphData.links = [
+							...graphData.links,
+							...mutualFriendsIds.map((mutualFriendId) => ({
+								source: friendId,
+								target: mutualFriendId,
+								value: 1
+							}))
+						]
+					})
+					.catch((error) => {
+						if ([15, 100].includes(error.error_code)) {
+							return;
+						}
 
-					throw error;
-				})
-		),
-		Promise.resolve());
+						throw error;
+					})
+			),
+			Promise.resolve()
+		);
 
 		return graphData;
 	})
