@@ -17,3 +17,20 @@ path {
   fill-opacity: .1;
   stroke-opacity: 1;
 }
+
+#scaleFactorSettings {
+  display: none;
+}
+
+#curveSettings {
+  display: none;
+}
+
+.graph-canvas {
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  z-index: -100;
+}
