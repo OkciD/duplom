@@ -9,7 +9,7 @@ VkApi.call(
 	'friends.get',
 	{
 		order: 'name',
-		fields: 'name',
+		fields: 'city,education'
 	}
 )
 	.then((response) => {

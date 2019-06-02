@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/d3": "4.13.2",
+    "@types/qs": "6.5.3",
     "autoprefixer": "^8.6.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "d3": "4.13.0",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "qs": "6.7.0"
   }
 }
