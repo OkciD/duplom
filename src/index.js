@@ -2,6 +2,8 @@ import 'normalize.css';
 import './styles/index.scss';
 import * as VkApi from './modules/vkApi'
 import { draw } from './modules/graph';
+import queryString from './utils/queryString';
+import getGroupId from './modules/grouper';
 
 VkApi.init();
 
@@ -13,6 +15,7 @@ VkApi.call(
 	}
 )
 	.then((response) => {
+		const groupingField = queryString.get('groupingField');
 		const friends = response.items;
 
 		return {
@@ -21,11 +24,15 @@ VkApi.call(
 					id: 0,
 					caption: 'Я'
 				},
-				...friends.map(({ id, first_name, last_name, university: universityId }) => ({
-					id,
-					caption: `${first_name} ${last_name}`,
-					group: universityId
-				}))
+				...friends.map((friend) => {
+					const { id, first_name, last_name } = friend;
+
+					return {
+						id,
+						caption: `${first_name} ${last_name}`,
+						group: getGroupId(friend, groupingField)
+					}
+				})
 			],
 			links: friends.map(({ id }) => ({
 				source: 0,
