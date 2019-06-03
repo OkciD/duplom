@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import colours from '../utils/colours';
 
 /**
  * @see https://bl.ocks.org/XavierGimenez/a8e8c5e9aed71ba96bd52332682c0399
@@ -7,7 +8,8 @@ import * as d3 from 'd3';
 var svg = d3.select('svg'),
 	width = +svg.attr('width'),
 	height = +svg.attr('height'),
-	color = d3.scaleOrdinal(d3.schemeCategory20),
+	color = d3.scaleOrdinal()
+		.range(colours),
 	valueline = d3.line()
 		.x(function(d) { return d[0]; })
 		.y(function(d) { return d[1]; })

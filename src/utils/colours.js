@@ -1,0 +1,71 @@
+/**
+ * @see http://bl.ocks.org/emmasaunders/f4902478bcfa411c77a412c02087bed4
+ */
+
+const colours = [
+	'#D62728',
+	'#1F77B4',
+	'#FF7F0E',
+	'#2CA02C',
+	'#9467BD',
+	'#8C564B',
+	'#E377C2',
+	'#7F7F7F',
+	'#BCBD22',
+	'#17BECF',
+	'#FF9896',
+	'#AEC7E8',
+	'#FFBB78',
+	'#98DF8A',
+	'#C5B0D5',
+	'#C49C94',
+	'#F7B6D2',
+	'#C7C7C7',
+	'#DBDB8D',
+	'#9EDAE5',
+	'#393B79',
+	'#637939',
+	'#8C6D31',
+	'#843C39',
+	'#7B4173',
+	'#5254A3',
+	'#8CA252',
+	'#BD9E39',
+	'#AD494A',
+	'#A55194',
+	'#6B6ECF',
+	'#B5CF6B',
+	'#E7BA52',
+	'#D6616B',
+	'#CE6DBD',
+	'#9C9EDE',
+	'#CEDB9C',
+	'#E7CB94',
+	'#E7969C',
+	'#DE9ED6'
+];
+
+// const schemeCategory20c = [
+// 	'#3182BD',
+// 	'#6BAED6',
+// 	'#9ECAE1',
+// 	'#C6DBEF',
+// 	'#E6550D',
+// 	'#FD8D3C',
+// 	'#FDAE6B',
+// 	'#FDD0A2',
+// 	'#31A354',
+// 	'#74C476',
+// 	'#A1D99B',
+// 	'#C7E9C0',
+// 	'#756BB1',
+// 	'#9E9AC8',
+// 	'#BCBDDC',
+// 	'#DADAEB',
+// 	'#636363',
+// 	'#969696',
+// 	'#BDBDBD',
+// 	'#D9D9D9'
+// ];
+
+export default colours;
