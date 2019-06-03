@@ -9,7 +9,7 @@ const DROP_CACHE_PARAM_NAME = 'dropCache';
 const noCache = queryString.has(NO_CACHE_PARAM_NAME);
 const dropCache = queryString.has(DROP_CACHE_PARAM_NAME);
 
-export function sleep(ms = 300) {
+export function sleep(ms = 350) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
