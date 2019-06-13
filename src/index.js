@@ -6,6 +6,8 @@ import queryString from './utils/queryString';
 import getGroupId from './modules/grouper';
 import deepmerge from 'deepmerge';
 
+import 'regenerator-runtime/runtime';
+
 async function createFriendsGraphData(rootNode = { id: 0, caption: 'Я' }) {
 	const { items: friends } = await VkApi.call(
 		'friends.get',

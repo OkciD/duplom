@@ -24,7 +24,10 @@ module.exports = {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader'
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
 				}
 			},
 			{
@@ -35,9 +38,6 @@ module.exports = {
 					},
 					{
 						loader: 'css-loader',
-						options: {
-							minimize: true
-						}
 					},
 					{
 						loader: 'postcss-loader',

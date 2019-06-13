@@ -11,11 +11,13 @@
   "author": "mwieth",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
     "@types/d3": "4.13.2",
     "@types/deepmerge": "2.2.0",
     "@types/qs": "6.5.3",
     "autoprefixer": "^8.6.0",
-    "babel-core": "^6.26.3",
+    "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
@@ -36,6 +38,7 @@
     "d3": "4.13.0",
     "deepmerge": "3.2.0",
     "normalize.css": "^8.0.1",
-    "qs": "6.7.0"
+    "qs": "6.7.0",
+    "regenerator-runtime": "0.13.2"
   }
 }
