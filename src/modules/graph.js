@@ -81,7 +81,12 @@ export function draw(graph) {
 		})
 		.on('click', function (d) {
 			// TODO: move to index.js
-			if (d.isSelf || d.isSelected) {
+			if (d.isSelf) {
+				return;
+			}
+
+			if (d.isSelected) {
+				queryString.remove('select', d.id);
 				return;
 			}
 

@@ -1,6 +1,6 @@
 import qs from 'qs';
 
-const qsObject = qs.parse(window.location.search.replace(/^\?/, ''));
+const qsObject = qs.parse(decodeURIComponent(window.location.search).replace(/^\?/, ''));
 
 export default {
 	has(key) {
@@ -18,7 +18,17 @@ export default {
 
 		window.location.search = `?${qs.stringify(qsObject)}`;
 	},
-	remove(key) {
+	remove(key, value) {
+		if (Array.isArray(qsObject[key]) && value) {
+			qsObject[key] = qsObject[key].filter((item) => item !== `${value}`);
 
+			if (qsObject[key].length === 0) {
+				delete qsObject[key];
+			}
+		} else {
+			delete qsObject[key];
+		}
+
+		window.location.search = `?${qs.stringify(qsObject)}`;
 	}
 }
