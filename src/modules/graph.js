@@ -5,9 +5,15 @@ import colours from '../utils/colours';
  * @see https://bl.ocks.org/XavierGimenez/a8e8c5e9aed71ba96bd52332682c0399
  */
 
-var svg = d3.select('svg'),
-	width = +svg.attr('width'),
-	height = +svg.attr('height'),
+var width = window.innerWidth
+		|| document.documentElement.clientWidth
+		|| document.body.clientWidth,
+	height = window.innerHeight
+		|| document.documentElement.clientHeight
+		|| document.body.clientHeight,
+	svg = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height),
 	color = d3.scaleOrdinal()
 		.range(colours),
 	valueline = d3.line()
