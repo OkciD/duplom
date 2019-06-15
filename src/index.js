@@ -34,10 +34,17 @@ function getFriends(userId) {
 	// добавляем в граф узел для себя
 	graphData.nodes.push({
 		id: +selfId,
-		caption: `${selfFirstName} ${selfLastName}`
+		caption: `${selfFirstName} ${selfLastName}`,
+		isSelf: true
 	});
 
 	const selfFriends = await getFriends(selfId);
+
+	// фильтруем айдишники выбранных друзей: оставляем только те, которые реально принадлежат нашим друзьям
+	const selectedFriendsIds = queryString.get('select', [])
+		.map((selectedFriendId) => +selectedFriendId)
+		.filter(Boolean)
+		.filter((selectedFriendId) => selfFriends.find(({ id }) => id === selectedFriendId));
 
 	// добавляем в граф узлы друзей
 	graphData.nodes = [
@@ -45,7 +52,8 @@ function getFriends(userId) {
 		...selfFriends.map((friend) => ({
 			id: friend.id,
 			caption: `${friend.first_name} ${friend.last_name}`,
-			group: getGroupId(friend, groupingParam)
+			group: getGroupId(friend, groupingParam),
+			isSelected: selectedFriendsIds.includes(friend.id)
 		}))
 	];
 
@@ -55,10 +63,6 @@ function getFriends(userId) {
 		target: selfId,
 		value: 1
 	}));
-
-	// фильтруем айдишники выбранных друзей: оставляем только те, которые реально принадлежат нашим друзьям
-	const selectedFriendsIds = queryString.get('select', [])
-		.filter((friendToExpandId) => selfFriends.find(({ id }) => id === +friendToExpandId));
 
 	for (const friendId of selectedFriendsIds) {
 		const friendsFriends = await getFriends(friendId);

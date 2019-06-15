@@ -72,7 +72,9 @@ export function draw(graph) {
 		.selectAll('circle')
 		.data(graph.nodes)
 		.enter().append('circle')
-		.attr('r', 5)
+		.attr('r', function (d) {
+			return (d.isSelf) ? 10 : (d.isSelected) ? 8 : 5
+		})
 		.attr('fill', function (d) {
 			return color(d.group);
 		})
