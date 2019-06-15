@@ -35,8 +35,8 @@
     "webpack-md5-hash": "0.0.6"
   },
   "dependencies": {
+    "cartesian": "1.0.1",
     "d3": "4.13.0",
-    "deepmerge": "3.2.0",
     "normalize.css": "^8.0.1",
     "qs": "6.7.0",
     "regenerator-runtime": "0.13.2"

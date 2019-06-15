@@ -3,8 +3,8 @@ import './styles/index.scss';
 import * as VkApi from './modules/vkApi'
 import { draw } from './modules/graph';
 import queryString from './utils/queryString';
+import cartesian from 'cartesian';
 import getGroupId from './modules/grouper';
-import deepmerge from 'deepmerge';
 
 import 'regenerator-runtime/runtime';
 
@@ -54,34 +54,63 @@ function getFriends(userId) {
 		value: 1
 	}));
 
-	const selectedFriends = queryString.get('select', []);
+	// фильтруем айдишники выбранных друзей: оставляем только те, которые реально принадлежат нашим друзьям
+	const selectedFriendsIds = queryString.get('select', [])
+		.filter((friendToExpandId) => selfFriends.find(({ id }) => id === +friendToExpandId));
 
-	await selectedFriends
-		// фильтруем переданные айдишники: оставляем только те, которые реально принадлежат нашим друзьям
-		.filter((friendToExpandId) => selfFriends.find(({ id }) => id === +friendToExpandId))
-		// это такой forEach, только в нём следующая итерация не начнётся, пока не завершится текущая
-		.reduce((accumulatorPromise, friendId) => accumulatorPromise.then(async () => {
-			const friendsFriends = await getFriends(friendId);
+	for (const friendId of selectedFriendsIds) {
+		const friendsFriends = await getFriends(friendId);
 
-			const newFriends = friendsFriends
-				.filter(({ id }) => !graphData.nodes.find(({ id: nodeId }) => nodeId === id));
+		const newFriends = friendsFriends
+			.filter(({ id }) => !graphData.nodes.find(({ id: nodeId }) => nodeId === id));
 
-			graphData.nodes = [
-				...graphData.nodes,
-				...newFriends.map(({ id, first_name, last_name }) => ({
-					id,
-					caption: `${first_name} ${last_name}`
-				}))
-			];
-			graphData.links = [
-				...graphData.links,
-				...friendsFriends.map(({ id }) => ({
-					source: id,
-					target: friendId,
-					value: 1
-				}))
-			]
-		}), Promise.resolve());
+		graphData.nodes = [
+			...graphData.nodes,
+			...newFriends.map(({ id, first_name, last_name }) => ({
+				id,
+				caption: `${first_name} ${last_name}`
+			}))
+		];
+		graphData.links = [
+			...graphData.links,
+			...friendsFriends.map(({ id }) => ({
+				source: id,
+				target: friendId,
+				value: 1
+			}))
+		]
+	}
+
+	const getMutualPairs = cartesian([
+		graphData.nodes.map(({ id }) => id),
+		[+selfId, ...selectedFriendsIds],
+	]);
+
+	for (const [sourceId, targetId] of getMutualPairs) {
+		if (sourceId === targetId) {
+			continue;
+		}
+
+		const mutualFriendsIds = await VkApi.call('friends.getMutual', {
+			source_uid: sourceId,
+			target_uid: targetId
+		}).catch((error) => {
+			if ([15, 30].includes(error.error_code)) {
+				return [];
+			}
+
+			throw error;
+		});
+
+		graphData.links = [
+			...graphData.links,
+			...mutualFriendsIds.map((mutualFriendId) => ({
+				source: sourceId,
+				target: mutualFriendId,
+				value: 1
+			}))
+		];
+	}
 
 	draw(graphData);
 })();
