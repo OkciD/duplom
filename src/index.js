@@ -8,6 +8,12 @@ import getGroupId from './modules/grouper';
 
 import 'regenerator-runtime/runtime';
 
+function hidePreloader() {
+	const preloader = document.querySelector('.preloader-container');
+
+	preloader.style.display = 'none';
+}
+
 function getFriends(userId) {
 	return VkApi.call(
 		'friends.get',
@@ -119,5 +125,6 @@ function getFriends(userId) {
 		];
 	}
 
+	hidePreloader();
 	draw(graphData);
 })();
