@@ -27,6 +27,7 @@ function getFriends(userId) {
 		nodes: [],
 		links: []
 	};
+	const groupingParam = queryString.get('groupBy');
 
 	const { id: selfId, first_name: selfFirstName, last_name: selfLastName } = VkApi.getSelf();
 
@@ -41,9 +42,10 @@ function getFriends(userId) {
 	// добавляем в граф узлы друзей
 	graphData.nodes = [
 		...graphData.nodes,
-		...selfFriends.map(({ id, first_name, last_name }) => ({
-			id,
-			caption: `${first_name} ${last_name}`
+		...selfFriends.map((friend) => ({
+			id: friend.id,
+			caption: `${friend.first_name} ${friend.last_name}`,
+			group: getGroupId(friend, groupingParam)
 		}))
 	];
 
@@ -66,9 +68,10 @@ function getFriends(userId) {
 
 		graphData.nodes = [
 			...graphData.nodes,
-			...newFriends.map(({ id, first_name, last_name }) => ({
-				id,
-				caption: `${first_name} ${last_name}`
+			...newFriends.map((friend) => ({
+				id: friend.id,
+				caption: `${friend.first_name} ${friend.last_name}`,
+				group: getGroupId(friend, groupingParam)
 			}))
 		];
 		graphData.links = [
