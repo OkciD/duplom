@@ -5,14 +5,9 @@ import { draw } from './modules/graph';
 import queryString from './utils/queryString';
 import cartesian from 'cartesian';
 import getGroupId from './modules/grouper';
+import { createButtons, hidePreloader } from './modules/dom';
 
 import 'regenerator-runtime/runtime';
-
-function hidePreloader() {
-	const preloader = document.querySelector('.preloader-container');
-
-	preloader.style.display = 'none';
-}
 
 function getFriends(userId) {
 	return VkApi.call(
@@ -126,5 +121,6 @@ function getFriends(userId) {
 	}
 
 	hidePreloader();
+	createButtons();
 	draw(graphData);
 })();

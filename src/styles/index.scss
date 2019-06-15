@@ -3,3 +3,15 @@
 * {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.buttons-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 20px 10px;
+}
+
+.button {
+  margin-right: 10px;
+}
