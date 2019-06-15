@@ -78,6 +78,13 @@ export function draw(graph) {
 		.attr('fill', function (d) {
 			return color(d.group);
 		})
+		.on('click', function (d) {
+			if (d.isSelf) {
+				return;
+			}
+
+			window.location.search += `&select[]=${d.id}`
+		})
 		.call(d3.drag()
 			.on('start', dragstarted)
 			.on('drag', dragged)
