@@ -67,19 +67,40 @@ export function draw(graph) {
 			return Math.sqrt(d.value);
 		});
 
-	node = svg.append('g')
-		.attr('class', 'nodes')
-		.selectAll('circle')
+	node = svg.append("g")
+		.attr("class", "nodes")
+		.selectAll("g")
 		.data(graph.nodes)
-		.enter().append('circle')
-		.attr('r', 5)
-		.attr('fill', function (d) {
-			return color(d.group);
-		})
+		.enter().append("g");
+
+	var circles = node.append("circle")
+		.attr("r", 5)
+		.attr("fill", function(d) { return color(d.group); })
 		.call(d3.drag()
-			.on('start', dragstarted)
-			.on('drag', dragged)
-			.on('end', dragended));
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended));
+
+	var lables = node.append("text")
+		.text(function(d) {
+			return d.caption;
+		})
+		.attr('x', 6)
+		.attr('y', 3);
+
+	// node = svg.append('g')
+	// 	.attr('class', 'nodes')
+	// 	.selectAll('circle')
+	// 	.data(graph.nodes)
+	// 	.enter().append('circle')
+	// 	.attr('r', 5)
+	// 	.attr('fill', function (d) {
+	// 		return color(d.group);
+	// 	})
+	// 	.call(d3.drag()
+	// 		.on('start', dragstarted)
+	// 		.on('drag', dragged)
+	// 		.on('end', dragended));
 
 	// count members of each group. Groups with less
 	// than 3 member will not be considered (creating
@@ -145,24 +166,14 @@ export function draw(graph) {
 
 	function ticked() {
 		link
-			.attr('x1', function (d) {
-				return d.source.x;
-			})
-			.attr('y1', function (d) {
-				return d.source.y;
-			})
-			.attr('x2', function (d) {
-				return d.target.x;
-			})
-			.attr('y2', function (d) {
-				return d.target.y;
-			});
+			.attr("x1", function(d) { return d.source.x; })
+			.attr("y1", function(d) { return d.source.y; })
+			.attr("x2", function(d) { return d.target.x; })
+			.attr("y2", function(d) { return d.target.y; });
+
 		node
-			.attr('cx', function (d) {
-				return d.x;
-			})
-			.attr('cy', function (d) {
-				return d.y;
+			.attr("transform", function(d) {
+				return "translate(" + d.x + "," + d.y + ")";
 			});
 
 		updateGroups();
