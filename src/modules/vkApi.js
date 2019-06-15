@@ -9,20 +9,31 @@ const DROP_CACHE_PARAM_NAME = 'dropCache';
 const noCache = queryString.has(NO_CACHE_PARAM_NAME);
 const dropCache = queryString.has(DROP_CACHE_PARAM_NAME);
 
-export function sleep(ms = 350) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+if (dropCache) {
+	localStorage.clear();
 }
 
-export function init() {
-	VK.init({ apiId: APP_ID });
-	VK.Auth.login(
-		() => {},
-		2 // https://vk.com/dev/permissions
-	);
+let selfSessionData = {};
 
-	if (dropCache) {
-		localStorage.clear();
-	}
+export function init() {
+	return new Promise(((resolve) => {
+		VK.init({ apiId: APP_ID });
+		VK.Auth.login(
+			({ session }) => {
+				selfSessionData = session;
+				resolve();
+			},
+			2 // https://vk.com/dev/permissions
+		);
+	}));
+}
+
+export function getSelf() {
+	return  selfSessionData.user;
+}
+
+function _sleep(ms = 350) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function call(method, data) {
@@ -39,7 +50,7 @@ export async function call(method, data) {
 		return Promise.resolve(cachedResponse);
 	}
 
-	await sleep();
+	await _sleep();
 
 	return new Promise((resolve, reject) => {
 		VK.Api.call(
