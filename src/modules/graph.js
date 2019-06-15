@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import colours from '../utils/colours';
+import queryString from '../utils/queryString';
 
 /**
  * @see https://bl.ocks.org/XavierGimenez/a8e8c5e9aed71ba96bd52332682c0399
@@ -79,11 +80,12 @@ export function draw(graph) {
 			return color(d.group);
 		})
 		.on('click', function (d) {
-			if (d.isSelf) {
+			// TODO: move to index.js
+			if (d.isSelf || d.isSelected) {
 				return;
 			}
 
-			window.location.search += `&select[]=${d.id}`
+			queryString.set('select', d.id, true);
 		})
 		.call(d3.drag()
 			.on('start', dragstarted)
