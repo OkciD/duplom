@@ -6,15 +6,7 @@ import queryString from '../utils/queryString';
  * @see https://bl.ocks.org/XavierGimenez/a8e8c5e9aed71ba96bd52332682c0399
  */
 
-var width = window.innerWidth
-		|| document.documentElement.clientWidth
-		|| document.body.clientWidth,
-	height = window.innerHeight
-		|| document.documentElement.clientHeight
-		|| document.body.clientHeight,
-	svg = d3.select("body").append("svg")
-		.attr("width", width)
-		.attr("height", height),
+var
 	color = d3.scaleOrdinal()
 		.range(colours),
 	valueline = d3.line()
@@ -29,14 +21,24 @@ var width = window.innerWidth
 	centroid,
 	node,
 	link,
-	curveTypes = ['curveBasisClosed', 'curveCardinalClosed', 'curveCatmullRomClosed', 'curveLinearClosed'],
-	simulation = d3.forceSimulation()
-		.force('link', d3.forceLink().id(function(d) { return d.id; }))
-		.force('charge', d3.forceManyBody())
-		.force('center', d3.forceCenter(width / 2, height / 2));
+	curveTypes = ['curveBasisClosed', 'curveCardinalClosed', 'curveCatmullRomClosed', 'curveLinearClosed'];
 
 
 export function draw(graph) {
+	var width = window.innerWidth
+		|| document.documentElement.clientWidth
+		|| document.body.clientWidth,
+		height = window.innerHeight
+			|| document.documentElement.clientHeight
+			|| document.body.clientHeight,
+		svg = d3.select("body").append("svg")
+			.attr("width", width)
+			.attr("height", height),
+		simulation = d3.forceSimulation()
+			.force('link', d3.forceLink().id(function(d) { return d.id; }))
+			.force('charge', d3.forceManyBody())
+			.force('center', d3.forceCenter(width / 2, height / 2));
+
 	// create selector for curve types
 	var select = d3.select('#curveSettings')
 		.append('select')
