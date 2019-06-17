@@ -6,7 +6,7 @@ import queryString from './utils/queryString';
 import cartesian from 'cartesian';
 import getGroupId, { getGroupsMap } from './modules/grouper';
 import { createButtons, createLegend, hidePreloader } from './modules/dom';
-import { GROUPING_PARAM_NAME, SELECTED_FRIENDS_PARAM_NAME } from './utils/constants';
+import { GROUPING_PARAM_NAME, SELECTED_FRIENDS_PARAM_NAME, SELF_ID_PARAM_NAME } from './utils/constants';
 
 import 'regenerator-runtime/runtime';
 import colours from './utils/colours';
@@ -32,7 +32,8 @@ function getFriends(userId) {
 	};
 	const groupingParam = queryString.get(GROUPING_PARAM_NAME);
 
-	const { id: selfId, first_name: selfFirstName, last_name: selfLastName } = VkApi.getSelf();
+	const selfId = queryString.get(SELF_ID_PARAM_NAME, VkApi.getSelf().id);
+	const [{ first_name: selfFirstName, last_name: selfLastName }] = await VkApi.call('users.get', { user_ids: selfId });
 
 	// добавляем в граф узел для себя
 	graphData.nodes.push({

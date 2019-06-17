@@ -5,6 +5,7 @@ export const NO_CACHE_PARAM_NAME = 'noCache';
 export const DROP_CACHE_PARAM_NAME = 'dropCache';
 export const GROUPING_PARAM_NAME = 'groupBy';
 export const SELECTED_FRIENDS_PARAM_NAME = 'select';
+export const SELF_ID_PARAM_NAME = 'selfId';
 
 export const BUTTONS_CONTAINER_LOCATOR = '.buttons-container';
 export const PRELOADER_CONTAINER_LOCATOR = '.preloader-container';
