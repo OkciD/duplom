@@ -19,6 +19,9 @@
 
   padding: 20px 10px;
 
+  box-sizing: border-box;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -40,6 +43,9 @@
 
 .legend-container {
   width: 200px;
+  max-height: calc(100% - 33px);
+
+  overflow: auto;
 }
 
 .legend-row {
@@ -52,8 +58,12 @@
   @include margin-bottom-small;
 
   &__colour {
-    width: 20px;
-    height: 20px;
+    $colour-preview-size: 20px;
+
+    min-width: $colour-preview-size;
+    max-width: $colour-preview-size;
+    min-height: $colour-preview-size;
+    max-height: $colour-preview-size;
 
     margin-right: 10px;
   }
