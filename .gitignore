@@ -91,3 +91,4 @@ typings/
 .dynamodb/
 
 dist
+.DS_Store
