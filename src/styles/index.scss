@@ -4,12 +4,23 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.buttons-container {
+.sidebar-container {
   position: absolute;
   top: 0;
   right: 0;
 
   padding: 20px 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.buttons-container {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 
 .button:not(:last-child) {
