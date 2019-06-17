@@ -5,7 +5,7 @@ import { draw } from './modules/graph';
 import queryString from './utils/queryString';
 import cartesian from 'cartesian';
 import getGroupId from './modules/grouper';
-import { createButtons, hidePreloader } from './modules/dom';
+import { createButtons, createLegend, hidePreloader } from './modules/dom';
 import { GROUPING_PARAM_NAME, SELECTED_FRIENDS_PARAM_NAME } from './utils/constants';
 
 import 'regenerator-runtime/runtime';
@@ -121,6 +121,7 @@ function getFriends(userId) {
 		];
 	}
 
+	createLegend([['#FF0000', 'Red'], ['#00FF00', 'Green'], ['#0000FF', 'Blue']]);
 	hidePreloader();
 	createButtons();
 	draw(graphData);

@@ -8,3 +8,4 @@ export const SELECTED_FRIENDS_PARAM_NAME = 'select';
 
 export const BUTTONS_CONTAINER_LOCATOR = '.buttons-container';
 export const PRELOADER_CONTAINER_LOCATOR = '.preloader-container';
+export const LEGEND_CONTAINER_LOCATOR = '.legend-container';
