@@ -1,10 +1,6 @@
 import VK from 'vk-openapi';
 import queryString from '../utils/queryString';
-
-const API_VERSION = '5.95';
-const APP_ID = '6998698';
-const NO_CACHE_PARAM_NAME = 'noCache';
-const DROP_CACHE_PARAM_NAME = 'dropCache';
+import { API_VERSION, APP_ID, DROP_CACHE_PARAM_NAME, NO_CACHE_PARAM_NAME } from '../utils/constants';
 
 const noCache = queryString.has(NO_CACHE_PARAM_NAME);
 const dropCache = queryString.has(DROP_CACHE_PARAM_NAME);

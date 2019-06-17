@@ -1,16 +1,17 @@
 import queryString from '../utils/queryString';
+import { BUTTONS_CONTAINER_LOCATOR, GROUPING_PARAM_NAME, PRELOADER_CONTAINER_LOCATOR } from '../utils/constants';
 
-const buttonContainer = document.querySelector('.buttons-container');
+const buttonContainer = document.querySelector(BUTTONS_CONTAINER_LOCATOR);
 
 export function createButtons() {
 	createButton('Группировка по городу', () => {
-		queryString.set('groupBy', 'city');
+		queryString.set(GROUPING_PARAM_NAME, 'city');
 	});
 	createButton('Группировка по университету', () => {
-		queryString.set('groupBy', 'university');
+		queryString.set(GROUPING_PARAM_NAME, 'university');
 	});
 	createButton('Отменить группировку', () => {
-		queryString.remove('groupBy');
+		queryString.remove(GROUPING_PARAM_NAME);
 	});
 }
 
@@ -24,7 +25,7 @@ function createButton(title, onClick) {
 }
 
 export function hidePreloader() {
-	const preloader = document.querySelector('.preloader-container');
+	const preloader = document.querySelector(PRELOADER_CONTAINER_LOCATOR);
 
 	preloader.style.display = 'none';
 }

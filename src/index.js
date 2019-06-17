@@ -6,6 +6,7 @@ import queryString from './utils/queryString';
 import cartesian from 'cartesian';
 import getGroupId from './modules/grouper';
 import { createButtons, hidePreloader } from './modules/dom';
+import { GROUPING_PARAM_NAME, SELECTED_FRIENDS_PARAM_NAME } from './utils/constants';
 
 import 'regenerator-runtime/runtime';
 
@@ -28,7 +29,7 @@ function getFriends(userId) {
 		nodes: [],
 		links: []
 	};
-	const groupingParam = queryString.get('groupBy');
+	const groupingParam = queryString.get(GROUPING_PARAM_NAME);
 
 	const { id: selfId, first_name: selfFirstName, last_name: selfLastName } = VkApi.getSelf();
 
@@ -42,7 +43,7 @@ function getFriends(userId) {
 	const selfFriends = await getFriends(selfId);
 
 	// фильтруем айдишники выбранных друзей: оставляем только те, которые реально принадлежат нашим друзьям
-	const selectedFriendsIds = queryString.get('select', [])
+	const selectedFriendsIds = queryString.get(SELECTED_FRIENDS_PARAM_NAME, [])
 		.map((selectedFriendId) => +selectedFriendId)
 		.filter(Boolean)
 		.filter((selectedFriendId) => selfFriends.find(({ id }) => id === selectedFriendId));
