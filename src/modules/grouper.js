@@ -15,6 +15,13 @@ export default function getGroupId(friend, groupingParam) {
 	}
 }
 
+export function getGroupsMap() {
+	return Object.values(groupData).reduce((result, { groupId, data: { name } }) => ({
+		...result,
+		[groupId]: name
+	}), {});
+}
+
 function groupByUniversity(universityData) {
 	const {
 		id: universityId,

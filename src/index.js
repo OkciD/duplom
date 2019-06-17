@@ -4,11 +4,12 @@ import * as VkApi from './modules/vkApi'
 import { draw } from './modules/graph';
 import queryString from './utils/queryString';
 import cartesian from 'cartesian';
-import getGroupId from './modules/grouper';
+import getGroupId, { getGroupsMap } from './modules/grouper';
 import { createButtons, createLegend, hidePreloader } from './modules/dom';
 import { GROUPING_PARAM_NAME, SELECTED_FRIENDS_PARAM_NAME } from './utils/constants';
 
 import 'regenerator-runtime/runtime';
+import colours from './utils/colours';
 
 function getFriends(userId) {
 	return VkApi.call(
@@ -121,7 +122,13 @@ function getFriends(userId) {
 		];
 	}
 
-	createLegend([['#FF0000', 'Red'], ['#00FF00', 'Green'], ['#0000FF', 'Blue']]);
+	if (queryString.has(GROUPING_PARAM_NAME)) {
+		const groupsMap = getGroupsMap();
+		const legendData = Object.entries(groupsMap).map(([groupId, groupName]) => ([colours[+groupId], groupName]));
+
+		createLegend(legendData);
+	}
+
 	hidePreloader();
 	createButtons();
 	draw(graphData);
